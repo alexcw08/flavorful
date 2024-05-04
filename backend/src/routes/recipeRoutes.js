@@ -1,8 +1,11 @@
-import { query, validationResult } from "express-validator";
-import fetchRecipes from "../services/recipeService.js";
-
+import { query, param, validationResult } from "express-validator";
+import { fetchRecipes, fetchRecipeID } from "../services/recipeService.js";
+// validators
 const queryValidator = [query("food").trim().notEmpty().escape()];
 
+const paramValidator = [param("id").trim().notEmpty().isNumeric().escape()];
+
+// handlers
 const handleRecipesReq = async (req, res) => {
   // call validator - check if err arr is not empty
   const validationErrors = validationResult(req);
@@ -19,8 +22,24 @@ const handleRecipesReq = async (req, res) => {
   }
 };
 
+const handleRecipeInfoReq = async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    return res.status(400).json({ errors: validateErrors.array() });
+  }
+  try {
+    const recipeID = req.params.id;
+    console.log(recipeID);
+    const recipeData = await fetchRecipeID(recipeID);
+    res.send(recipeData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const recipeRoutes = (app) => {
   app.get("/api/recipes", queryValidator, handleRecipesReq);
+  app.get("/api/recipe/:id", paramValidator, handleRecipeInfoReq);
 };
 
 export default recipeRoutes;
