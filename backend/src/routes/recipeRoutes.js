@@ -2,6 +2,7 @@ import { query, param, validationResult } from "express-validator";
 import {
   fetchRecipes,
   fetchRecipeID,
+  fetchSimilarRecipes,
   fetchRandomRecipes,
 } from "../services/recipeService.js";
 // validators
@@ -40,6 +41,20 @@ const handleRecipeInfoReq = async (req, res) => {
   }
 };
 
+const handleSimilarRecipes = async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    return res.status(400).json({ errors: validationErrors.array() });
+  }
+  try {
+    const recipeID = req.params.id;
+    const similarRecipes = await fetchSimilarRecipes(recipeID);
+    res.send(similarRecipes);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const handleRandomRecipes = async (req, res) => {
   try {
     const randomRecipes = await fetchRandomRecipes();
@@ -51,7 +66,8 @@ const handleRandomRecipes = async (req, res) => {
 
 const recipeRoutes = (app) => {
   app.get("/api/recipes", queryValidator, handleRecipesReq);
-  app.get("/api/recipe/:id", paramValidator, handleRecipeInfoReq);
+  app.get("/api/recipes/:id", paramValidator, handleRecipeInfoReq);
+  app.get("/api/recipes/:id/similar", paramValidator, handleSimilarRecipes);
   app.get("/api/random-recipes", handleRandomRecipes);
 };
 

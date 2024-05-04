@@ -18,6 +18,15 @@ export const fetchRecipeID = async (recipeId) => {
   return apiRes.data;
 };
 
+export const fetchSimilarRecipes = async (recipeId) => {
+  // fetches similar recipes based on recipe id
+  const key = process.env.RECIPE_KEY;
+  const apiRes = await axios.get(
+    `https://api.spoonacular.com/recipes/${recipeId}/similar?&apiKey=${key}`
+  );
+  return apiRes.data;
+};
+
 export const fetchRandomRecipes = async () => {
   const key = process.env.RECIPE_KEY;
   const apiRes = await axios.get(
