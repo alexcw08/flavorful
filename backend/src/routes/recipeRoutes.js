@@ -1,72 +1,18 @@
-import { query, param, validationResult } from "express-validator";
 import {
-  fetchRecipes,
-  fetchRecipeID,
-  fetchSimilarRecipes,
-  fetchRandomRecipes,
-} from "../services/recipeService.js";
-// validators
-const queryValidator = [query("food").trim().notEmpty().escape()];
+  handleRecipes,
+  handleRecipeInfo,
+  handleSimilarRecipes,
+  handleRandomRecipes,
+} from "../handlers/recipeHandlers.js";
 
-const paramValidator = [param("id").trim().notEmpty().isNumeric().escape()];
-
-// handlers
-const handleRecipesReq = async (req, res) => {
-  // call validator - check if err arr is not empty
-  const validationErrors = validationResult(req);
-  if (!validationErrors.isEmpty()) {
-    return res.status(400).json({ errors: validationErrors.array() });
-  }
-  // no errors - try fetch
-  try {
-    const recipeQuery = req.query.food;
-    const recipesData = await fetchRecipes(recipeQuery);
-    res.send(recipesData);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const handleRecipeInfoReq = async (req, res) => {
-  const validationErrors = validationResult(req);
-  if (!validationErrors.isEmpty()) {
-    return res.status(400).json({ errors: validationErrors.array() });
-  }
-  try {
-    const recipeID = req.params.id;
-    const recipeData = await fetchRecipeID(recipeID);
-    res.send(recipeData);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const handleSimilarRecipes = async (req, res) => {
-  const validationErrors = validationResult(req);
-  if (!validationErrors.isEmpty()) {
-    return res.status(400).json({ errors: validationErrors.array() });
-  }
-  try {
-    const recipeID = req.params.id;
-    const similarRecipes = await fetchSimilarRecipes(recipeID);
-    res.send(similarRecipes);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const handleRandomRecipes = async (req, res) => {
-  try {
-    const randomRecipes = await fetchRandomRecipes();
-    res.send(randomRecipes);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+import {
+  queryValidator,
+  paramValidator,
+} from "../validators/recipeValidator.js";
 
 const recipeRoutes = (app) => {
-  app.get("/api/recipes", queryValidator, handleRecipesReq);
-  app.get("/api/recipes/:id", paramValidator, handleRecipeInfoReq);
+  app.get("/api/recipes", queryValidator, handleRecipes);
+  app.get("/api/recipes/:id", paramValidator, handleRecipeInfo);
   app.get("/api/recipes/:id/similar", paramValidator, handleSimilarRecipes);
   app.get("/api/random-recipes", handleRandomRecipes);
 };
