@@ -12,9 +12,16 @@ export const fetchRecipes = async (foodQuery) => {
 export const fetchRecipeID = async (recipeId) => {
   // fetches recipe information by id
   const key = process.env.RECIPE_KEY;
-  console.log(recipeId);
   const apiRes = await axios.get(
     `https://api.spoonacular.com/recipes/${recipeId}/information?&apiKey=${key}`
+  );
+  return apiRes.data;
+};
+
+export const fetchRandomRecipes = async () => {
+  const key = process.env.RECIPE_KEY;
+  const apiRes = await axios.get(
+    `https://api.spoonacular.com/recipes/random?number=5&apiKey=${key}`
   );
   return apiRes.data;
 };
