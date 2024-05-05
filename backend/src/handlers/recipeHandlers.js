@@ -55,6 +55,14 @@ export const handleRandomRecipes = async (req, res) => {
     const randomRecipes = await fetchRandomRecipes();
     res.send(randomRecipes);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    // check if a response was received
+    if (error.response) {
+      res
+        .status(error.response.status)
+        .json({ error: error.response.statusText });
+    } else {
+      // no response from external server
+      res.status(500).json({ error: error.message });
+    }
   }
 };
