@@ -5,6 +5,7 @@ import {
   fetchRandomRecipes,
 } from "../services/recipeService.js";
 import { validationResult } from "express-validator";
+import { handleApiError } from "../utils/errorHandler.js";
 
 export const handleRecipes = async (req, res) => {
   // call validator - check if err arr is not empty
@@ -18,7 +19,7 @@ export const handleRecipes = async (req, res) => {
     const recipesData = await fetchRecipes(recipeQuery);
     res.send(recipesData);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    handleApiError(error, res);
   }
 };
 
@@ -32,7 +33,7 @@ export const handleRecipeInfo = async (req, res) => {
     const recipeData = await fetchRecipeID(recipeID);
     res.send(recipeData);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    handleApiError(error, res);
   }
 };
 
@@ -46,7 +47,7 @@ export const handleSimilarRecipes = async (req, res) => {
     const similarRecipes = await fetchSimilarRecipes(recipeID);
     res.send(similarRecipes);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    handleApiError(error, res);
   }
 };
 
@@ -55,14 +56,6 @@ export const handleRandomRecipes = async (req, res) => {
     const randomRecipes = await fetchRandomRecipes();
     res.send(randomRecipes);
   } catch (error) {
-    // check if a response was received
-    if (error.response) {
-      res
-        .status(error.response.status)
-        .json({ error: error.response.statusText });
-    } else {
-      // no response from external server
-      res.status(500).json({ error: error.message });
-    }
+    handleApiError(error, res);
   }
 };
