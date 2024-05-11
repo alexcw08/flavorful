@@ -1,5 +1,12 @@
+import { Header } from "../components/Header";
+import { RecipeList } from "../components/RecipeList";
 function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <Header />
+      <RecipeList />
+    </div>
+  );
 }
 
 export default Home;
