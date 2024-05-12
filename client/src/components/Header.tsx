@@ -1,10 +1,12 @@
 export const Header = () => {
   return (
-    <header className="navbar  justify-between">
+    <header className="navbar px-0 md:px-4  justify-between">
       <div>
-        <a className="btn btn-ghost text-lg md:text-xl">Flavorful</a>
+        <a className="btn btn-ghost text-lg md:text-xl ml-2 md:ml-0">
+          Flavorful
+        </a>
       </div>
-      <ul className="menu menu-horizontal rounded-box">
+      <ul className="w-1/2 flex justify-center gap-8 md:gap-0 md:menu md:menu-horizontal ">
         <li>
           <a href="">Home</a>
         </li>
@@ -20,7 +22,7 @@ export const Header = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar"
+            className="btn btn-ghost btn-circle avatar mr-2 "
           >
             <div className="w-10 rounded-full">
               <img
