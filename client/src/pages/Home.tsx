@@ -1,11 +1,15 @@
 import { Header } from "../components/Header";
-import { RecipeList } from "../components/RecipeList";
+import RandomRecipes from "../components/RandomRecipes";
+import RecipeOfDay from "../components/RecipeOfDay";
+import SearchBar from "../components/SearchBar";
 function Home() {
   return (
-    <div>
+    <>
       <Header />
-      <RecipeList />
-    </div>
+      <SearchBar />
+      <RecipeOfDay />
+      <RandomRecipes />
+    </>
   );
 }
 
