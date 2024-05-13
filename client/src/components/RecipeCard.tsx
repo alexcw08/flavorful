@@ -2,36 +2,23 @@ export const RecipeCard = ({ recipe }) => {
   let recipeImageURL = null;
 
   return (
-    <div className="card shadow-xl ">
+    <div className="card rounded-none lg:rounded-box">
+      {/* image */}
       <figure className="">
         {recipe.image ? (
-          <img
-            className="object-contain md:object-cover h-full w-full"
-            src={recipe.image}
-            alt=""
-          />
+          <img className=" md:object-cover " src={recipe.image} alt="" />
         ) : (
-          <img
-            className="object-contain md:object-cover h-full w-full"
-            src="/no-image.jpeg"
-            alt=""
-          />
+          <img className=" md:object-cover " src="/no-image.jpeg" alt="" />
         )}
       </figure>
-      <div className="card-body  justify-between gap-y-4">
-        <h2 className="card-title">{recipe.title}</h2>
-        <div className="flex gap-y-8 flex-col lg:flex-row justify-between">
-          <div className="flex flex-col gap-y-2   justify-center">
-            {recipe.vegetarian ? (
-              <div className="badge badge-primary join-item">Vegetarian</div>
-            ) : null}
-            {recipe.vegan ? (
-              <div className="badge badge-secondary join-item">Vegan</div>
-            ) : null}
-            <div className="badge badge-secondary join-item">Vegan</div>
-          </div>
+      <div className="card-body w-full items-center py-1 ">
+        {/* name of recipe */}
+        <h2 className="text-center h-14 md:h-20 w-40 md:text-xl  overflow-hidden">
+          {recipe.title}
+        </h2>
+        <div className="flex w-full flex-col items-center gap-y-2 mb-2 ">
           <div className="card-actions ">
-            <button className="btn btn-sm lg:btn-md">View Recipe</button>
+            <button className="btn px-4">View Recipe</button>
           </div>
         </div>
       </div>
