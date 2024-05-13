@@ -1,9 +1,10 @@
-import Home from "./pages/Home";
 import "./App.css";
+import RecipeResults from "./pages/RecipeResults";
+
 function App() {
   return (
     <>
-      <Home />
+      <RecipeResults />
     </>
   );
 }
