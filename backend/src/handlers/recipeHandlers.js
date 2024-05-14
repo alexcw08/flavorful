@@ -15,7 +15,7 @@ export const handleRecipes = async (req, res) => {
   }
   // no errors - try fetch
   try {
-    const recipeQuery = req.query.food;
+    const recipeQuery = req.query.search;
     const recipesData = await fetchRecipes(recipeQuery);
     res.send(recipesData);
   } catch (error) {

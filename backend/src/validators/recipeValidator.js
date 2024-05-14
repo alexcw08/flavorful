@@ -1,7 +1,7 @@
 import { query, param } from "express-validator";
 
 export const queryValidator = [
-  query("food")
+  query("search")
     .trim()
     .notEmpty()
     .withMessage("Food query parameter is required.")
