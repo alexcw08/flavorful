@@ -5,7 +5,7 @@ const fetchData = async (apiEndpoint, key) => {
   // makes the external api call using endpoint and key given
   try {
     const apiRes = await axios.get(
-      `${baseRecipesURL}${apiEndpoint}&apiKey=${key}`
+      `${baseRecipesURL}${apiEndpoint}&number=100&apiKey=${key}`
     );
     return apiRes.data;
   } catch (error) {
@@ -38,6 +38,6 @@ export const fetchSimilarRecipes = async (recipeId) => {
 export const fetchRandomRecipes = async () => {
   // fetches 5 random recipes
   const key = process.env.RECIPE_KEY;
-  const endpoint = `random?number=5`;
+  const endpoint = `random?number=10`;
   return fetchData(endpoint, key);
 };
