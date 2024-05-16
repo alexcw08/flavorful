@@ -1,8 +1,36 @@
-export default function SearchBar() {
+import { ChangeEvent, FormEvent, useState } from "react";
+import { fetchRecipesByQuery } from "../services/recipes";
+
+export default function SearchBar({ setSearchResults }) {
+  const [userInput, setUserinput] = useState("");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const searchResponse = await fetchRecipesByQuery(userInput);
+      setSearchResults(searchResponse);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setUserinput("");
+    }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserinput(e.target.value);
+  };
+
   return (
-    <div className=" w-full m-auto py-4">
+    <form onSubmit={handleSubmit} className=" w-full m-auto py-4">
       <label className="input input-bordered w-2/4 m-auto flex items-center gap-2">
-        <input type="text" className="grow" placeholder="Search for recipes" />
+        <input
+          onChange={handleChange}
+          value={userInput}
+          type="text"
+          className="grow"
+          placeholder="Search for recipes"
+          required
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
@@ -16,6 +44,6 @@ export default function SearchBar() {
           />
         </svg>
       </label>
-    </div>
+    </form>
   );
 }
