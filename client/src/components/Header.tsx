@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Header = () => {
   return (
     <header className="navbar justify-between  bg-slate-700">
@@ -24,10 +26,10 @@ export const Header = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a>Recipes</a>
+              <Link to="/recipes">Recipes</Link>
             </li>
             <li>
               <a>Nutrition</a>
@@ -36,7 +38,10 @@ export const Header = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">Flavorful</a>
+        {/* <a className="btn btn-ghost text-xl">Flavorful</a> */}
+        <Link to="/" className="btn btn-ghost text-xl">
+          Flavorful
+        </Link>
       </div>
       <div className="navbar-end">
         <button className="btn btn-ghost">Sign out</button>

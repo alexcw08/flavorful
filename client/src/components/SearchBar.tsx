@@ -1,14 +1,17 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { fetchRecipesByQuery } from "../services/recipes";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar({ setSearchResults }) {
   const [userInput, setUserinput] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const searchResponse = await fetchRecipesByQuery(userInput);
       setSearchResults(searchResponse);
+      navigate(`/recipes?search=${userInput}`);
     } catch (error) {
       console.log(error);
     } finally {
